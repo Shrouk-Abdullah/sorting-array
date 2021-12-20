@@ -4,34 +4,34 @@ void printArray(int array[], int size);
 int n,x,arr[100];
 int main() {
 cout<<"Enter number of elements to be sorted"<<endl;
-cin>>n;
+cin>>n;                                                                 //scanning number of elements of array
 cout<<"Enter elements separated by space and click enter when you finish"<<endl;
 for(int i=0;i<n;i++)cin>>arr[i];
 cout<<"choose sorting algorithm; enter 0 for bubble sorting or 1 selection sorting"<<endl;
-cin>>x;
-if(x==0){
+cin>>x;                                                                 //user chooses sorting algorithm
+if(x==0){                                                               //bubble sort algorithm
     for (int i = 0; i < n-1; i++){
             for (int j = 0; j < n-i-1; j++)
-            if (arr[j] > arr[j+1]){
-                    int temp = arr[j];
-                    arr[j] = arr[j+1];
+            if (arr[j] > arr[j+1]){                                     //comparing between current element and next element to check swapping
+                    int temp = arr[j];                                  //defining temp 
+                    arr[j] = arr[j+1];                                  //swapping between elements
                     arr[j+1] = temp;
             }
     }
 
-  printArray(arr,n);
+  printArray(arr,n);                                                    //calling print array function
 }
 
-else if(x==1){
+else if(x==1){                                                          //selection sort algorithm
 
-  for (int j = 0; j < n - 1; j++) {
-    int min_idx = j;
+  for (int j = 0; j < n - 1; j++) {                                     
+    int min_idx = j;                                                    
     for (int i = j + 1; i < n; i++) {
-      if (arr[i] < arr[min_idx])
+      if (arr[i] < arr[min_idx])                                       //comparing between current element and next element to check swapping
         min_idx = i;
     }
-    int temp = arr[min_idx];
-    arr[min_idx] = arr[j];
+    int temp = arr[min_idx];                                           //defining temp
+    arr[min_idx] = arr[j];                                             //swapping between elements
     arr[j]= temp;
   }
   printArray(arr,n);
@@ -41,10 +41,10 @@ else if(x==1){
 }
 
 
-// print array
-void printArray(int arr[], int n) {
-  for (int i = 0; i < n; ++i) {
-    cout <<arr[i]<<" ";
+                                                              // print array function
+void printArray(int arr[], int n) {                           
+  for (int i = 0; i < n; ++i) {                              
+    cout <<arr[i]<<" ";                                       //printing current element in the array
   }
-  cout <<endl;
+  cout <<endl;                                                // new line
 }
