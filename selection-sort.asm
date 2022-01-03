@@ -32,11 +32,16 @@ outer_loop:                   ; loop label
      XCHG DL, [DI]                ;  dl=[di] , [di]=dl  -> dl = array[6]=2   ,  
      mov [si], dl               ;  [si]=dl      array[6] = 2
      loop outer_loop               ; jump to label outer_loop while cx!=0
-     
+    
+     lea si , data1
+     mov cx , len
      printArray:   
        mov dl , [si]
-      add dl , 48
+       add dl , 48
        mov ah , 02h
-       int 21h  
+       int 21h 
+       mov dl , 32    ;-> for distance
+       mov ah , 02h
+       int 21h
        inc si
       loop printArray 
