@@ -37,7 +37,7 @@
               mov ah,02h         ;;shit cursor to start of line
               int 21h
             
-
+                
               call input_arr
               mov ah,4ch
               int 21h              
@@ -141,19 +141,5 @@ endp
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 END
