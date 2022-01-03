@@ -2,6 +2,16 @@
 using namespace std;
 void printArray(int array[], int size);
 int n,x,arr[100];
+void selectionSort(int *array, int size) {
+   int i, j, imin;
+   for(i = 0; i<size-1; i++) {
+      imin = i;   //get index of minimum data
+      for(j = i+1; j<size; j++)
+         if(array[j] < array[imin])
+            imin = j;
+         //placing in correct position
+         swap(array[i], array[imin]);
+   }
 int main() {
 cout<<"Enter number of elements to be sorted"<<endl;
 cin>>n;                                                                 //scanning number of elements of array
