@@ -1,7 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
+void swapping(int &a, int &b) {
+   int temp;
+   temp = a;
+   a = b;
+   b = temp;
+}
+void display(int *array, int size) {
+   for(int i = 0; i<size; i++)
+      cout << array[i] << " ";
+   cout << endl;
 void printArray(int array[], int size);
 int n,x,arr[100];
+   
 void selectionSort(int *array, int size) {
    int i, j, imin;
    for(i = 0; i<size-1; i++) {
