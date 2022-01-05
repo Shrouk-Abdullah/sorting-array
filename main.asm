@@ -224,3 +224,143 @@
       INT 21H
       RET 
   CONDITION ENDP
+  
+;-------------------DECIMALFORM FUNCTION-------------------------------------------------------------
+DECIMALFORM PROC      
+    
+   PUSH BX                       
+   PUSH CX                        
+   PUSH DX                        
+   JMP ReadInput                   
+  
+   SkipBackspace:                         
+   
+   MOV AH, 2                    
+   MOV DL, 20H                   
+   INT 21H           
+   
+   ReadInput:                       
+
+   XOR BX, BX                   
+   XOR CX, CX                     
+   XOR DX, DX                  
+   MOV AH, 01H                    
+   INT 21H                        
+   CMP AL, "-"                    
+   JE Negative                      
+   CMP AL, "+"                    
+   JE Positive                  
+   JMP SpecialInput               
+   
+   Negative:                         
+   
+   MOV CH, 1                    
+   INC CL                         
+   JMP Input                   
+   
+   Positive:                           
+   
+   MOV CH, 2                      
+   INC CL                     
+   
+   Input:                                 
+   
+   MOV AH, 01h                    
+   INT 21H                    
+     
+   SpecialInput:                
+     
+   CMP AL, 0DH              
+   JE EndNumber              
+   CMP AL, 8H              
+   JNE CheckCharacter          
+   CMP CH, 0                    
+   JNE Remove_negative_sign     
+   CMP CL, 0                   
+   JE SkipBackspace          
+   JMP DeleteCharacter            
+     
+   Remove_negative_sign:        
+     
+   CMP CH, 1                  
+   JNE Remove_positive_sign     
+   CMP CL, 1                
+   JE DeleteSign   
+             
+   Remove_positive_sign: 
+            
+   CMP CL, 1                    
+   JE DeleteSign       
+   JMP DeleteCharacter              
+     
+   DeleteSign:                              
+     
+   MOV AH, 2                
+   MOV DL, 20H                
+   INT 21H                    
+   MOV DL, 8H                
+   INT 21H                    
+   JMP ReadInput         
+                                         
+   DeleteCharacter:                  
+     
+     MOV AX, BX                   
+     MOV BX, 10                   
+     DIV BX                       
+     MOV BX, AX                   
+     MOV AH, 2                    
+     MOV DL, 20H               
+     INT 21H                     
+     MOV DL, 8H                   
+     INT 21H                      
+     XOR DX, DX                  
+     DEC CL                       
+     JMP Input                   
+     
+    CheckCharacter:               
+     
+     INC CL                       
+     CMP AL, 30H                
+     JL Error                    
+     CMP AL, 39H               
+     JG Error              
+     AND AX, 000FH                
+     PUSH AX  
+     MOV AX, 10                   
+     MUL BX                      
+     MOV BX, AX                  
+     POP AX                       
+     ADD BX,AX                                          
+     JS Error                   
+     JMP Input  
+                        
+   Error:
+                          
+   MOV AH, 02h                     
+   MOV DL, 7H                     
+   INT 21H                       
+   XOR CH, CH                                
+   
+   DeleteNumber:                            
+   
+     MOV DL, 8H                  
+     INT 21H                      
+     MOV DL, 20H                 
+     INT 21H                      
+     MOV DL, 8H                   
+     INT 21H                     
+     LOOP DeleteNumber                   
+     JMP readinput                    
+   
+   EndNumber:                 
+   
+   CMP CH, 1                      
+   JNE Exit                      
+   NEG BX                         
+   Exit:                        
+   MOV AX, BX                     
+   POP DX                       
+   POP CX                         
+   POP BX                         
+   RET  
+   DECIMALFORM ENDP
