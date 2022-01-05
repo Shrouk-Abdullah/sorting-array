@@ -9,20 +9,20 @@ In every iteration of selection sort, the minimum element (considering ascending
 
 # Complexity:
 time complxity:
--Average case :o(n^2)
--Worst case :o(n^2)
+- Average case :o(n^2)
+- Worst case :o(n^2)
 
 
 space complxity:o(1)
 don't need to extra space. 
 
 # Advantage :
--simple sorting algorithm.
--in_place algorithm.
--don't need to extra space. 
+- simple sorting algorithm.
+- in_place algorithm.
+- don't need to extra space. 
 
 # Disadvantage :
--takes along time .
+- takes along time .
 
 # example
 
