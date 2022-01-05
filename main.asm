@@ -364,3 +364,114 @@ DECIMALFORM PROC
    POP BX                         
    RET  
    DECIMALFORM ENDP
+;----------------------------------Array_Size_plus-------------------------------;
+ Array_SizeP PROC
+   PUSH BX                        
+   PUSH CX                        
+   PUSH DX                        
+   JMP ReadInput1                     
+   SKIP_BACKSPACE1:              
+   MOV AH, 2                      
+   MOV DL, 20H                    
+   INT 21H                        
+   ReadInput1:                        
+   XOR BX, BX                     
+   XOR CX, CX                     
+   XOR DX, DX                     
+   MOV AH, 1                      
+   INT 21H                        
+   CMP AL, "-"                    
+   INC CL
+   JE printError                     
+   CMP AL, "+"                    
+   JE Positive1                      
+   JMP SpecialInput1                
+   Positive1:                        
+   MOV CH, 2                      
+   INC CL                         
+   INPUT1:                       
+     MOV AH, 1                    
+     INT 21H                      
+     SpecialInput1:                
+     CMP AL, 0DH                  
+     JE END_INPUT1 ;<-----
+     CMP AL, 8H    
+     JNE NOT_BACKSPACE
+     CMP CH, 0                    
+     JNE Remove_negative_sign1      
+     CMP CL, 0                    
+     JE SKIP_BACKSPACE1         
+     JMP DeleteCharacter1  
+     CMP CL, 1                    
+     JE REMOVE_PLUS1   
+     Remove_negative_sign1:         
+     CMP CL, 1                    
+     JE REMOVE_PLUS1             
+     JMP DeleteCharacter1              
+     REMOVE_PLUS1: 
+      MOV AH, 2                  
+      MOV DL, 20H                
+       INT 21H                    
+       MOV DL, 8H                 
+       INT 21H                    
+       JMP ReadInput                 
+                                  
+     DeleteCharacter1: 
+     MOV AX, BX                   
+     MOV BX, 10                   
+     DIV BX                       
+     MOV BX, AX                   
+     MOV AH, 2                    
+     MOV DL, 20H                  
+     INT 21H                      
+     MOV DL, 8H                   
+     INT 21H                      
+     XOR DX, DX                   
+     DEC CL                       
+     JMP INPUT1                  
+     NOT_BACKSPACE:   
+     INC CL                       
+     CMP AL, 30H                  
+     JL BEEB_ERROR1    
+     CMP AL, 39H                  
+     JG BEEB_ERROR1                   
+     AND AX, 000FH 
+     PUSH AX                      
+     MOV AX, 10                   
+     MUL BX                       
+     MOV BX, AX                   
+     POP AX                       
+     ADD BX, AX                   
+     JS BEEB_ERROR1                   
+   JMP INPUT1                    
+   BEEB_ERROR1: 
+   MOV AH, 2                      
+   MOV DL, 7H                     
+   INT 21H                        
+   XOR CH, CH                     
+    printError:                      
+   LEA DX, Msg3 
+   MOV AH, 9
+   INT 21H
+  RET
+   
+   CLEAR1:                        
+     MOV DL, 8H                    
+     INT 21H                       
+     MOV DL, 20H                   
+     INT 21H                       
+     MOV DL, 8H                    
+     INT 21H                       
+   LOOP CLEAR1                    
+   JMP ReadInput                      
+   END_INPUT1:                   
+   CMP CH, 1                      
+  JNE EXIT1                     
+ NEG BX                         
+   EXIT1:                        
+   MOV AX, BX                     
+   POP DX                         
+   POP CX                         
+   POP BX                         
+   RET                            
+   Array_SizeP ENDP     
