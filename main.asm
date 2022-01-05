@@ -1,3 +1,17 @@
+  .MODEL SMALL
+ .STACK 100H
+ .DATA
+ 
+    Msg1  DW  ,0AH,0DH,'Please enter size of array :$'
+    Msg2  DW  ,0AH,0DH,'Please enter the Array elements:$'  
+    Msg3  DW  ,0AH,0DH,'Only positive integer is acceptable $'
+    Msg4  DW  'Please choose type of sort, 1: for Bubble sort or 2: for Selection sort:$'  
+    Msg5  DW  'Please choose between 1: for Bubble sort or 2: for Selection sort:',0AH,0DH,'$'
+    Msg6  DW  ,0AH,0DH,'Your sorted array is:$'
+    Arr DW 255 DUP(?)    
+ 
+ .CODE
+ 
   MAIN PROC
   
      MOV AX, @DATA                
