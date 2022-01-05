@@ -141,5 +141,39 @@ endp
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+proc selection_sort 
+mov bx ,0    
+mov bx  , sz         
+cmp bx, 1                     
+jle ennd
+dec bx                 
+mov cx, bx                    
+mov ax, si   
+outer_loop:                  
+     mov bx, cx                   
+     mov si, ax                   
+     mov di, ax                   
+     mov dx, [di]                  
+  inner_loop:                 
+       inc si                     
+       cmp [si], dx              
+       jng skip                  
+       mov di, si                
+       mov dx, [di]    
+      ; call printArray           
+       skip:                                  
+       dec bx                     
+       jnz inner_loop             
+     mov dx, [si]                
+     xchg dx, [di]             
+     mov [si], dx             
+     loop outer_loop  
+    ;xor ax,ax   
+    call PRINT
+    
+ennd:
+     endp
+endp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
 END
