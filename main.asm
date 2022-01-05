@@ -144,4 +144,83 @@
     MOV AH, 9                     
     INT 21H                    
     MOV CX,1                   
-    Jne BEEB_ERROR                         
+    Jne BEEB_ERROR           
+    
+   BUBBLE_SORT:
+    POP BX                        
+    MOV AX, SI               
+    MOV CX, BX                 
+    PUSH BX                      
+    CMP CX,1                
+    JLE  Skip_Dec               
+    DEC CX                      
+   
+   OUTER_LOOP:                  
+    MOV BX, CX                
+    MOV SI, AX                 
+    MOV DI, AX                
+    INC DI
+    INC DI                      
+     INNER_LOOP:                 
+       MOV DX, [SI]               
+       CMP DX, [DI]            
+       JNG SKIP_EXCHANGE       
+       XCHG DX, [DI]             
+       MOV [SI], DX            
+     SKIP_EXCHANGE:             
+      INC SI 
+      INC SI                      
+      INC DI
+      INC DI                    
+      DEC BX                   
+     JNZ INNER_LOOP              
+    LOOP OUTER_LOOP            
+   
+    Skip_dec:                   
+     jmp ENDSORT               
+
+    SELECTION_SORT:
+     POP BX                         
+     CMP BX, 1                  
+     PUSH BX                                       
+     JLE SKIP_SORTING       
+     PUSH BX                       
+     DEC BX                     
+     MOV CX, BX              
+     MOV AX, SI              
+     
+     OUTER_LOOP2:              
+      MOV BX, CX                 
+      MOV SI, AX                  
+      MOV DI, AX                 
+      MOV DX, [DI]               
+
+      INNER_LOOP2:               
+       INC SI                     
+       INC SI                     
+       CMP [SI], DX              
+       JNG SKIP2                 
+       MOV DI, SI                 
+       MOV DX, [DI]              
+       SKIP2:                 
+       DEC BX                 
+     JNZ INNER_LOOP2             
+     MOV DX, [SI]             
+     XCHG DX, [DI]              
+     MOV [SI], DX              
+    LOOP OUTER_LOOP2            
+   
+    SKIP_SORTING:                  
+     ENDSORT:                                                  
+      LEA DX, Msg6            
+      MOV AH, 9             
+      INT 21H           
+      LEA SI, Arr            
+      POP BX                     
+      CALL PRINT_ARRAY           
+      MOV AH, 4CH               
+      INT 21H
+      MOV AH, 4CH               
+      INT 21H
+      RET 
+  CONDITION ENDP
