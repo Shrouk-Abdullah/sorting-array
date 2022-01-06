@@ -11,51 +11,49 @@
     Arr DW 255 DUP(?)    
  
  .CODE
- 
   MAIN PROC
   
      MOV AX, @DATA                
      MOV DS, AX                  
-     LEA DX, Msg1               
+     LEA DX, Msg1             ; print first message of the program  
      MOV AH, 9                  
      INT 21H                      
     
-     LEA SI, Arr                 
+     LEA SI, Arr              ; si = address of array   
                                 
      NULL:        
      
-     CALL Array_SizeP           
-     AND AX, 00FFH               
-     MOV BX,AX                    
+     CALL Array_SizeP         ; call array size function to take input array size  
+     AND AX, 00FFH            ; ah=0   
+     MOV BX,AX                     
      CMP BX,0                     
-     je NotAcceptable            
+     je NotAcceptable         ; if array size = 0, jump to label not acceptable   
      
      LEA DX, Msg2                
      MOV AH, 9                   
      INT 21H                      
      
-     CALL READ_ARRAY            
+     CALL READ_ARRAY          ; call read array function to read elements of the array  
      
      LEA DX, Msg4                
      MOV AH, 9                    
      INT 21H                      
     
-     LEA SI,Arr                  
-     CALL CONDITION               
+     LEA SI,Arr               ; si carries array address before calling condition function   
+     CALL CONDITION           ; calling condition function to check for type of sort    
  
      NotAcceptable:  
      
-     MOV AH, 02h                 
+     MOV AH, 02h              ; raise beeb error   
      MOV DL, 7H                  
      INT 21H                     
-     LEA DX, Msg1                 
+     LEA DX, Msg1             ; print the first message again    
      MOV AH, 9                   
      INT 21H                      
-     jmp Null                      
+     jmp Null                 ; go back to read the array size again     
      
      MOV AH, 4CH                  
-     INT 21H                                  
- 
+     INT 21H                                
   MAIN ENDP
 ;-------------------CONDITION function-----------------------------------
    CONDITION PROC 
@@ -104,16 +102,7 @@
      XOR DX, DX                  
      DEC CL                        
      JMP INPUT_ENTER                       
-
-                                    ;this is used to store multi digit 
-     PUSH AX                        ;store ax in stack to use it
-     MOV AX, 10                     ;ax=10
-     MUL BX                         ;bx=bx*10
-     MOV BX, AX                     ;bx=ax
-     POP AX                         ;restore ax
-     ADD BX, AX                     ;bx=ax+bx
-     JS BEEB_ERROR                  ;if sign flag = 1 , jump to error
-     JMP INPUT_ENTER                ;else jump to to input enter to take input from the user        
+       
                          
     BEEB_ERROR:                      
      MOV AH, 2                      ; make a beeb
@@ -145,34 +134,34 @@
     INT 21H                    
     MOV CX,1                   
     Jne BEEB_ERROR                  ;if bl is not equal to 1 or 2, jump back to beeb error
-    
-   BUBBLE_SORT:
-    POP BX                        
-    MOV AX, SI               
-    MOV CX, BX                 
-    PUSH BX                      
-    CMP CX,1                
-    JLE  Skip_Dec               
-    DEC CX                      
+  
+   BUBBLE_SORT:                    
+    POP BX                          ;get bx from stak which contains array size
+    MOV AX, SI                      ;ax=si (address of the array)
+    MOV CX, BX                      ;cx=bx
+    PUSH BX                         ;store bx again to the stack to use it in nested loop
+    CMP CX,1                        ;check cx=1
+    JLE  Skip_Dec                   ;if cx=1 , skip sorting
+    DEC CX                          ;cx=cx-1
    
-   OUTER_LOOP:                  
-    MOV BX, CX                
-    MOV SI, AX                 
-    MOV DI, AX                
+   OUTER_LOOP:                      ;loop1
+    MOV BX, CX                      ; bx=cx
+    MOV SI, AX                      ; si = address of first element in array
+    MOV DI, AX                      ; di = address of first element in array
     INC DI
-    INC DI                      
-     INNER_LOOP:                 
-       MOV DX, [SI]               
-       CMP DX, [DI]            
-       JNG SKIP_EXCHANGE       
-       XCHG DX, [DI]             
+    INC DI                          ; di = di + 2 ------ di = second element in array
+     INNER_LOOP:                    ;loop2
+       MOV DX, [SI]                 ;dx=first element
+       CMP DX, [DI]                 ;compare between first element and second element
+       JNG SKIP_EXCHANGE            ;if it is sorted , skip exchange
+       XCHG DX, [DI]                ;if not, exchange
        MOV [SI], DX            
      SKIP_EXCHANGE:             
-      INC SI 
+      INC SI                        ;si=si+2 ----- poit on the next element in array
       INC SI                      
       INC DI
-      INC DI                    
-      DEC BX                   
+      INC DI                        ;di=di+2 ----- poit on the next element in array
+      DEC BX                        ;bx=bx-1 ----- to loop less next time
      JNZ INNER_LOOP              
     LOOP OUTER_LOOP            
    
@@ -180,50 +169,48 @@
      jmp ENDSORT               
 
     SELECTION_SORT:
-     POP BX                         
-     CMP BX, 1                  
-     PUSH BX                                       
-     JLE SKIP_SORTING       
-     PUSH BX                       
-     DEC BX                     
-     MOV CX, BX              
-     MOV AX, SI              
+     POP BX                       ; return bx from the stack (containing array size)  
+     CMP BX, 1                    ;compare bx to 1
+     PUSH BX                      ; push bx to stack                 
+     JLE SKIP_SORTING             ; if bx <=1 , skip sorting
+     PUSH BX                      ; push bx to the stack to use it in nested loop  
+     DEC BX                       ; bx=bx-1 
+     MOV CX, BX                   ; cx=bx
+     MOV AX, SI                   ; ax=si
      
      OUTER_LOOP2:              
-      MOV BX, CX                 
-      MOV SI, AX                  
-      MOV DI, AX                 
-      MOV DX, [DI]               
+      MOV BX, CX                  ; bx=cx (loop counter)
+      MOV SI, AX                  ; si = address of first element in array
+      MOV DI, AX                  ; di = address of first element in array
+      MOV DX, [DI]                ; dx = first element in array
 
       INNER_LOOP2:               
+       INC SI                     ; si points to next element in array
        INC SI                     
-       INC SI                     
-       CMP [SI], DX              
-       JNG SKIP2                 
-       MOV DI, SI                 
-       MOV DX, [DI]              
+       CMP [SI], DX               ; compare element value of si to dx
+       JNG SKIP2                  ; if it is not sorted,skip the iterator change
+       MOV DI, SI                 ; di = si (smaller element)
+       MOV DX, [DI]               
        SKIP2:                 
-       DEC BX                 
-     JNZ INNER_LOOP2             
-     MOV DX, [SI]             
-     XCHG DX, [DI]              
-     MOV [SI], DX              
+       DEC BX                     ; decrease counter of the inner loop
+     JNZ INNER_LOOP2              ; if bx != 0 , repeat the inner loop
+     MOV DX, [SI]                 ; when inner loop ends temp (dx) = si
+     XCHG DX, [DI]                ; swap dx with the di (smallest element)
+     MOV [SI], DX                 ; make si (the last element) equal di(the smallest element)
     LOOP OUTER_LOOP2            
    
     SKIP_SORTING:                  
      ENDSORT:                                                  
-      LEA DX, Msg6            
+      LEA DX, Msg6                ;print msg 6 to tell the user his array
       MOV AH, 9             
       INT 21H           
-      LEA SI, Arr            
-      POP BX                     
-      CALL PRINT_ARRAY           
-      MOV AH, 4CH               
-      INT 21H
-      MOV AH, 4CH               
+      LEA SI, Arr                 ;si = address of array
+      POP BX                      ; pop bx from the stack (array size)
+      CALL PRINT_ARRAY            ; call print array to prit the array
+      MOV AH, 4CH                 ;terminate the program
       INT 21H
       RET 
-  CONDITION ENDP
+  CONDITION ENDP                                            
   
 ;-------------------DECIMALFORM FUNCTION-------------------------------------------------------------
 DECIMALFORM PROC      
