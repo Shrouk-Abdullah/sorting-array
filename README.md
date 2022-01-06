@@ -9,24 +9,24 @@ In every iteration of selection sort, the minimum element (considering ascending
 
 # Complexity:
 time complxity:
--Average case :o(n^2)
--Worst case :o(n^2)
+- Average case :o(n^2)
+- Worst case :o(n^2)
 
 
 space complxity:o(1)
 don't need to extra space. 
 
 # Advantage :
--simple sorting algorithm.
--in_place algorithm.
+- simple sorting algorithm.
+- in_place algorithm.
 -don't need to extra space. 
 
 # Disadvantage :
--takes along time .
+- takes along time .
 
 # example
 
- arr[] = 64 25 12 22 11
+ `arr[] = 64 25 12 22 11`
 
 // Find the minimum element in arr[0...4]
 // and place it at beginning
@@ -36,7 +36,7 @@ don't need to extra space.
 // and place it at beginning of arr[1...4]
 11 12 25 22 64
 
-// Find the minimum element in arr[2...4]
+//Find the minimum element in arr[2...4]
 // and place it at beginning of arr[2...4]
 11 12 22 25 64
 
