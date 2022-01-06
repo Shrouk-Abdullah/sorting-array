@@ -26,7 +26,7 @@ don't need to extra space.
 
 # examples
 
- `arr[] = 64 25 12 22 11`
+- `arr[] = 64 25 12 22 11`
 
 - ` Find the minimum element in arr[0...4]
 and place it at beginning
