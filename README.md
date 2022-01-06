@@ -24,7 +24,7 @@ don't need to extra space.
 # Disadvantage :
 - takes along time .
 
-# examples
+# example
 
 - `arr[] = 64 25 12 22 11`
 
