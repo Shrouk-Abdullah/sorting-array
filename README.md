@@ -42,4 +42,4 @@ don't need to extra space.
 
 - Find the minimum element in `arr[3...4]`
  and place it at beginning of `arr[3...4]`
-11 12 22 25 64 
+> 11 12 22 25 64 
