@@ -59,92 +59,92 @@
   MAIN ENDP
 ;-------------------CONDITION function-----------------------------------
    CONDITION PROC 
-    push bx                       
+    push bx                ; store bx in the stack to use it       
    
     READ_SORT_NUMBER:
  
-     mov CX,0                   
+     mov CX,0              ;making ax,bx,cx=0     
      mov BX,0                
      mov AX,0                   
      
-     Mov AH,1                     
+     Mov AH,1                       ;taking input from the user supposed to be 1 or 2 
      INT 21h                     
      
-     cmp    al, '-'             
+     cmp    al, '-'                 ;check for -ve sign at input
      JE NEGATIVE_INPUT                
      
-     cmp al,'+'                   
+     cmp al,'+'                     ;check for +ve sign at input
      jE POSITIVE_INPUT                     
      jmp INPUT_ENTER                         
               
-    NEGATIVE_INPUT:                    
+    NEGATIVE_INPUT:                 ;if input is -ve jump to error   
      INC CL                      
      JMP BEEB_ERROR                  
    
-    POSITIVE_INPUT:                  
+    POSITIVE_INPUT:                 ;if input is +ve jump to error    
      INC CL                   
      JMP BEEB_ERROR                
                  
-    INPUT_ENTER:                    
-     MOV BL,AL                   
+    INPUT_ENTER:                    ;taking input from user supposed to be enter  
+     MOV BL,AL                      ;saving al in bl, which contains the input number
      MOV AH, 1                 
      INT 21H                    
 
-    SKIP_INPUT0:                
+    SKIP_INPUT0:                    ; if user pressed enter
      CMP AL, 0DH                
-     JE END_INPUT0                
+     JE END_INPUT0                  ; jump to end input(input is added successfully without errors)
 
  
-    MOVE_BACK0:                  
-     MOV AH, 2                    
+    MOVE_BACK0:                     ; code will jump here only if user pressed any button except enter
+     MOV AH, 2                         
      MOV DL, 20H                
-     INT 21H                     
+     INT 21H                        ;erase the last input
      MOV DL, 8H                  
      INT 21H                      
      XOR DX, DX                  
-     DEC CL                     
+     DEC CL                        
      JMP INPUT_ENTER                       
 
-     
-     PUSH AX                      
-     MOV AX, 10                   
-     MUL BX                       
-     MOV BX, AX                   
-     POP AX                   
-     ADD BX, AX                 
-     JS BEEB_ERROR                
-     JMP INPUT_ENTER                        
+                                    ;this is used to store multi digit 
+     PUSH AX                        ;store ax in stack to use it
+     MOV AX, 10                     ;ax=10
+     MUL BX                         ;bx=bx*10
+     MOV BX, AX                     ;bx=ax
+     POP AX                         ;restore ax
+     ADD BX, AX                     ;bx=ax+bx
+     JS BEEB_ERROR                  ;if sign flag = 1 , jump to error
+     JMP INPUT_ENTER                ;else jump to to input enter to take input from the user        
                          
     BEEB_ERROR:                      
-     MOV AH, 2                    
-     MOV DL, 7H               
+     MOV AH, 2                      ; make a beeb
+     MOV DL, 7H                     
      INT 21H                     
      
     CLEAR_CHAR:                      
-     MOV DL, 8H                   
-     INT 21H                    
-     MOV DL, 20H                
+     MOV DL, 8H                     ;delete last input
+     INT 21H                        
+     MOV DL, 20H                    
      INT 21H                   
      MOV DL, 8H                   
      INT 21H                 
-    LOOP CLEAR_CHAR                  
-    JMP READ_SORT_NUMBER                  
+    LOOP CLEAR_CHAR                 ;while cl is not 0 delete one more char 
+    JMP READ_SORT_NUMBER            ;jmp read sort number to take input again from the user      
        
    END_INPUT0:               
    
    CHECK_FOR_BUBBLE:                 
-    CMP BL,31h                 
+    CMP BL,31h                      ;if bl=1 , go to bubble
     JE BUBBLE_SORT              
-    JNE CHECK_FOR_SELECTION          
+    JNE CHECK_FOR_SELECTION         ;if not , go to check for selection 
 
-   CHECK_FOR_SELECTION:             
-    CMP BL,32h                 
+   CHECK_FOR_SELECTION:            
+    CMP BL,32h                      ;if bl=2 , go to selection
     JE SELECTION_SORT            
-    LEA DX, Msg5             
+    LEA DX, Msg5                    ;print msg 5 to tell user to enter 1 or 2
     MOV AH, 9                     
     INT 21H                    
     MOV CX,1                   
-    Jne BEEB_ERROR           
+    Jne BEEB_ERROR                  ;if bl is not equal to 1 or 2, jump back to beeb error
     
    BUBBLE_SORT:
     POP BX                        
