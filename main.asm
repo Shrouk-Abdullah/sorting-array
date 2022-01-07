@@ -292,11 +292,11 @@ DECIMALFORM PROC
                                          
    DeleteCharacter:                  
      
-     MOV AX, BX                   
-     MOV BX, 10                   
-     DIV BX                       
-     MOV BX, AX                   
-     MOV AH, 2                    
+     MOV AX, BX                   ;move value of BX into AX  
+     MOV BX, 10                   ; set BX=10
+     DIV BX                       ; AX=AX/BX
+     MOV BX, AX                   ; move value of AX in BX
+     MOV AH, 02H                    
      MOV DL, 20H               
      INT 21H                     
      MOV DL, 8H                   
