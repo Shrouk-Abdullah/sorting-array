@@ -512,7 +512,11 @@ SIGNED PROC
    RET                            
  SIGNED ENDP
 ;-----------------------------  READ_ARRAY  -------------------------------;
- 
+ ;this function read the elements in an array
+  ;   SI=offset  of the array
+   ;  BX=size of the array
+   ;input ( SI and  BX )
+   
  READ_ARRAY PROC
  
    PUSH AX                       
