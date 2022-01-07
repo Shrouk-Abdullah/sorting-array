@@ -59,6 +59,10 @@ time complxity:
 - Worst case :o(n^2)
 - best case : o(n)
 
+
+## Project Tools:
+- emu8086
+
 # Resources:
 Reference :
 Assembly language for x86 processors sixth edition
