@@ -484,3 +484,30 @@ DECIMALFORM PROC
    POP AX                         
    RET                            
    READ_ARRAY ENDP
+;----------------------------------PRINT_ARRAY------------------------------ 
+ PRINT_ARRAY PROC
+  
+   PUSH AX                         
+   PUSH CX                        
+   PUSH DX                        
+   MOV CX, BX                     
+   PRINTARRAY:                    
+     XOR AH, AH                   
+     MOV AX, [SI]                 
+     CALL OUTDEC                  
+     MOV AH, 2                    
+     MOV DL, 20H                  
+     INT 21H                      
+
+     INC SI                      
+     INC SI
+   LOOP PRINTARRAY                
+
+   POP DX                         
+   POP CX                         
+   POP AX                        
+   RET                           
+ PRINT_ARRAY ENDP
+;--------------------------------------------------------------------------  
+
+
