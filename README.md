@@ -79,9 +79,22 @@ Reference :
 Assembly language for x86 processors sixth edition
 Youtube playlists:
 https://www.youtube.com/watch?v=vtWKlgEi9js&list=PLPedo-T7QiNsIji329HyTzbKBuCAHwNFC
+
 https://www.youtube.com/watch?v=QAJfNoVimjI&list=PLYgImg3VllLpg-3EL4HkHiqzqT8NpGyJ2
+
 tutorial (12 parts):
 http://jbwyatt.com/253/emu/asm_tutorial_01.html
+http://jbwyatt.com/253/emu/asm_tutorial_02.html
+http://jbwyatt.com/253/emu/asm_tutorial_03.html
+http://jbwyatt.com/253/emu/asm_tutorial_04.html
+http://jbwyatt.com/253/emu/asm_tutorial_05.html
+http://jbwyatt.com/253/emu/asm_tutorial_06.html
+http://jbwyatt.com/253/emu/asm_tutorial_07.html
+http://jbwyatt.com/253/emu/asm_tutorial_08.html
+http://jbwyatt.com/253/emu/asm_tutorial_09.html
+http://jbwyatt.com/253/emu/asm_tutorial_10.html
+http://jbwyatt.com/253/emu/asm_tutorial_11.html
+http://jbwyatt.com/253/emu/asm_tutorial_12.html
 
 # Bugs we faced 
 - Input size was taking from 0 to 9 only (one digit)
