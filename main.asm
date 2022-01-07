@@ -323,7 +323,7 @@ DECIMALFORM PROC
                         
    Error:
                           
-   MOV AH, 02H                     
+   MOV AH, 02H                     ;print dl
    MOV DL, 7H                     
    INT 21H                       
    XOR CH, CH                                
