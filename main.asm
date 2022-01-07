@@ -99,7 +99,7 @@
      INT 21H                        ;erase the last input
      MOV DL, 8H                  
      INT 21H                      
-     XOR DX, DX                  
+     XOR DX, DX                      ; set the value of DX = 0
      DEC CL                        
      JMP INPUT_ENTER                       
        
