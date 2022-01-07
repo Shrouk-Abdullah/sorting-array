@@ -313,13 +313,13 @@ DECIMALFORM PROC
      CMP AL, 39H                  ; compare AL with 9
      JG Error                     ; jump to Error label if AL>9
      AND AX, 000FH                ; convert ascii to decimal
-     PUSH AX  
-     MOV AX, 10                   
-     MUL BX                      
-     MOV BX, AX                  
-     POP AX                       
-     ADD BX,AX                                                          
-     JMP Input  
+     PUSH AX                      ; push AX into stack
+     MOV AX, 10                   ; set AX=10
+     MUL BX                       ; AX=AX*BX
+     MOV BX, AX                   ; BX=AX
+     POP AX                       ; pop value from stack into AX
+     ADD BX,AX                    ; BX=BX+AX                                     
+     JMP Input                    ; jump to label Input
                         
    Error:
                           
