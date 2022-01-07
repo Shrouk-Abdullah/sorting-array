@@ -307,12 +307,12 @@ DECIMALFORM PROC
      
     CheckCharacter:               
      
-     INC CL                       
-     CMP AL, 30H                
-     JL Error                    
-     CMP AL, 39H               
-     JG Error              
-     AND AX, 000FH                
+     INC CL                       ;increment CL
+     CMP AL, 30H                  ; compare AL with 0
+     JL Error                     ; jump Error label if AL<0
+     CMP AL, 39H                  ; compare AL with 9
+     JG Error                     ; jump to Error label if AL>9
+     AND AX, 000FH                ; convert ascii to decimal
      PUSH AX  
      MOV AX, 10                   
      MUL BX                      
