@@ -333,22 +333,22 @@ DECIMALFORM PROC
      MOV DL, 08H                  ;set DL=backspace
      INT 21H                      ; print a character
      MOV DL, 20H                  ;set DL=' '
+     INT 21H                      ;print a character
+     MOV DL, 08H                  ; set DL=backspace 
      INT 21H                      ; print a character
-     MOV DL, 08H                   
-     INT 21H                     
-     LOOP DeleteNumber                   
-     JMP readinput                    
+     LOOP DeleteNumber            ; Loop till CX=0       
+     JMP ReadInput                ; jump to ReadInput label    
    
    EndNumber:                 
    
-   CMP CH, 1                      
-   JNE Exit                      
-   NEG BX                         
+   CMP CH, 1                      ;compare CH=1
+   JNE Exit                       ;jump to Exit label if CH!=1
+   NEG BX                         ;negate BX, make it in its two's complement form 
    Exit:                        
-   MOV AX, BX                     
-   POP DX                       
-   POP CX                         
-   POP BX                         
+   MOV AX, BX                     ;AX=BX
+   POP DX                         ;pop a value from srack into DX register
+   POP CX                         ;pop a value from srack into CX register
+   POP BX                         ;pop a value from srack into BX register
    RET  
    DECIMALFORM ENDP
 ;----------------------------------Array_Size_plus-------------------------------;
