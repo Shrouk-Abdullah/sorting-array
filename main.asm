@@ -266,14 +266,14 @@ DECIMALFORM PROC
    JNE Remove_negative_sign       ; if CH not equal 0, jump to Remove_negativ_sign label
    CMP CL, 0                      ; compare CL with 0
    JE SkipBackspace               ; if CL=0,jump SkipBackspace label
-   JMP DeleteCharacter            
+   JMP DeleteCharacter            ; jump to DeleteCharacter label
      
    Remove_negative_sign:        
      
-   CMP CH, 1                  
-   JNE Remove_positive_sign     
-   CMP CL, 1                
-   JE DeleteSign   
+   CMP CH, 1                      ; compare CH with 1
+   JNE Remove_positive_sign       ; if CH not equal 1, jump to Remove_positive_sign
+   CMP CL, 1                      ;compare CL with 1
+   JE DeleteSign                  ; jump to DeleteSign if CL equal 1
              
    Remove_positive_sign: 
             
