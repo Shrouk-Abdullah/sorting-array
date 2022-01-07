@@ -5,6 +5,10 @@
 - Number of vaules is variable and determined by the user.
 - Handling input errors like - or + as input in array size.
 
+# Language Used 
+- x86 assembly language
+- C++
+
 # Bubble sort
 Bubble sort is an internal exchange sort. It is considered one of the simplest methods to sort an array of objects.  It is also known as a sinking sort (because the smallest items "sink" to the bottom of the array). 
 Instead of searching an array as a whole, the bubble sort works by comparing adjacent pairs of objects in the array.  If the objects are not in the correct ordered, they are swapped so that the largest of the two moves up.  This process continues until the largest of the objects, eventually "bubbles" up to the highest position in the array.  After this occurs, the search for the  next largest object begins.  The swapping continues until the whole array is in the correct order.
