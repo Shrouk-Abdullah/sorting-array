@@ -79,3 +79,8 @@ https://www.youtube.com/watch?v=vtWKlgEi9js&list=PLPedo-T7QiNsIji329HyTzbKBuCAHw
 https://www.youtube.com/watch?v=QAJfNoVimjI&list=PLYgImg3VllLpg-3EL4HkHiqzqT8NpGyJ2
 tutorial (12 parts):
 http://jbwyatt.com/253/emu/asm_tutorial_01.html
+
+# Bugs we faced 
+- Input size was taking from 0 to 9 only (one digit)
+- '-' or '+' signs was taken as array size without prompting errors.
+
