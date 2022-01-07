@@ -2,7 +2,7 @@
  .STACK 100H
  .DATA
  
-    Msg1  DW  ,0AH,0DH,'Please enter size of array :$'
+    Msg1  DW  ,0AH,0DH,'Please enter size of array :$'        ;define output messages
     Msg2  DW  ,0AH,0DH,'Please enter the Array elements:$'  
     Msg3  DW  ,0AH,0DH,'Only positive integer is acceptable $'
     Msg4  DW  'Please choose type of sort, 1: for Bubble sort or 2: for Selection sort:$'  
