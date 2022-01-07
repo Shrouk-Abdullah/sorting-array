@@ -353,7 +353,7 @@ DECIMALFORM PROC
    DECIMALFORM ENDP
 ;----------------------------------Array_Size_plus-------------------------------;
  Array_SizeP PROC
-   PUSH BX                        
+   PUSH BX                        ;push bx,cx,dx to stack
    PUSH CX                        
    PUSH DX                        
    JMP ReadInput1                     
