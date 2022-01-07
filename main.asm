@@ -544,26 +544,26 @@ SIGNED PROC
  
 PRINT_ARRAY PROC
   
-   PUSH AX                          ;push AX into stack 
-   PUSH CX                          ;push CX into stack 
-   PUSH DX                          ;push DX into stack 
-   MOV CX, BX                       ;PUT value of BX in CX
-   PRINTARRAY:                      ;LOOP &  PRINTARRAY is a label
-     XOR AH, AH                   
-     MOV AX, [SI]                 
-     CALL SIGNED                  
-     MOV AH, 2                    
-     MOV DL, 20H                  
-     INT 21H                      
+   PUSH AX                       ;push AX into stack 
+   PUSH CX                       ;push CX into stack 
+   PUSH DX                       ;push DX into stack 
+   MOV CX, BX                    ;PUT value of BX in CX
+   PRINTARRAY:                   ;LOOP &  PRINTARRAY is a label
+     XOR AH, AH                  ; clear AH
+     MOV AX, [SI]                ; set AL=[SI]
+     CALL SIGNED                 ; call function SIGNED 
+     MOV AH, 2                   ;set AH=2
+     MOV DL, 20H                 ;set DL=20H, ascii code of ' '                
+     INT 21H                     ;interrupt 21H prints a character     
 
-     INC SI                      
-     INC SI
-   LOOP PRINTARRAY                
+     INC SI                      ; set SI=SI+1
+     INC SI                      ; set SI=SI+1
+   LOOP PRINTARRAY               ; if(CX!=0), jump to label PRINTARRAY
 
-   POP DX                         
-   POP CX                         
-   POP AX                        
-   RET                           
+   POP DX                        ; pop a value from STACK into DX
+   POP CX                        ; pop a value from STACK into CX
+   POP AX                        ; pop a value from STACK into AX
+   RET                           ; return
  PRINT_ARRAY ENDP
 ;--------------------------------------------------------------------------  
 
