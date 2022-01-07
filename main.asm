@@ -462,3 +462,25 @@ DECIMALFORM PROC
    POP BX                         
    RET                            
    Array_SizeP ENDP     
+;-----------------------------  READ_ARRAY  -------------------------------;
+ 
+ READ_ARRAY PROC
+ 
+   PUSH AX                       
+   PUSH CX                        
+   PUSH DX                        
+   
+   MOV CX, BX                    
+   READARRAY:                    
+     CALL DECIMALFORM            
+     MOV [SI], AX                
+     ADD SI, 2                   
+     MOV DL, 0AH                 
+     MOV AH, 2                    
+     INT 21H                      
+   LOOP READARRAY                
+   POP DX                        
+   POP CX                        
+   POP AX                         
+   RET                            
+   READ_ARRAY ENDP
