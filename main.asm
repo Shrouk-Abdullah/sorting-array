@@ -549,7 +549,7 @@ PRINT_ARRAY PROC
    PUSH DX                       ;push DX into stack 
    MOV CX, BX                    ;PUT value of BX in CX
    PRINTARRAY:                   ;LOOP &  PRINTARRAY is a label
-     XOR AH, AH                  ; clear AH
+     XOR AH, AH                  ; clear AH,AH=0
      MOV AX, [SI]                ; set AL=[SI]
      CALL SIGNED                 ; call function SIGNED 
      MOV AH, 2                   ;set AH=2
