@@ -62,6 +62,9 @@ The selection sort algorithm sorts an array by repeatedly finding the minimum el
 2) Remaining subarray which is unsorted.
 In every iteration of selection sort, the minimum element (considering ascending order) from the unsorted subarray is picked and moved to the sorted subarray.
 
+## Bubble sort algorithm:
+![](https://github.com/Shrouk-Abdullah/sorting-array/blob/9737b3552316a6ef6f8fc28f14c7daafcda8bb04/selection%20sort.png)
+
 # Complexity:
 time complxity:
 - Average case :o(n^2)
