@@ -330,10 +330,10 @@ DECIMALFORM PROC
    
    DeleteNumber:                            
    
-     MOV DL, 08H                  
-     INT 21H                      
-     MOV DL, 20H                 
-     INT 21H                      
+     MOV DL, 08H                  ;set DL=backspace
+     INT 21H                      ; print a character
+     MOV DL, 20H                  ;set DL=' '
+     INT 21H                      ; print a character
      MOV DL, 08H                   
      INT 21H                     
      LOOP DeleteNumber                   
