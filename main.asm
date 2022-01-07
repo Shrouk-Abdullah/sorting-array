@@ -538,7 +538,12 @@ SIGNED PROC
    RET                            
    READ_ARRAY ENDP
 ;----------------------------------PRINT_ARRAY------------------------------ 
- PRINT_ARRAY PROC
+ ;this function print the elements of a given array
+ ;   SI=offset  of the array
+   ;  BX=size of the array
+   ;input ( SI and  BX )
+ 
+PRINT_ARRAY PROC
   
    PUSH AX                         
    PUSH CX                        
