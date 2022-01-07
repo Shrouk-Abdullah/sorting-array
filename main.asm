@@ -296,14 +296,14 @@ DECIMALFORM PROC
      MOV BX, 10                   ; set BX=10
      DIV BX                       ; AX=AX/BX
      MOV BX, AX                   ; move value of AX in BX
-     MOV AH, 02H                    
-     MOV DL, 20H               
-     INT 21H                     
-     MOV DL, 8H                   
-     INT 21H                      
-     XOR DX, DX                  
-     DEC CL                       
-     JMP Input                   
+     MOV AH, 02H                  ; set AX=2H  
+     MOV DL, 20H                  ; set DL=' '
+     INT 21H                      ; print a character
+     MOV DL, 8H                   ; set DL= backspace
+     INT 21H                      ; print a character
+     XOR DX, DX                   ; clear DX
+     DEC CL                       ; decrement CL, CL=CL-1
+     JMP Input                    ; jump to Input label
      
     CheckCharacter:               
      
@@ -324,18 +324,18 @@ DECIMALFORM PROC
                         
    Error:
                           
-   MOV AH, 02h                     
+   MOV AH, 02H                     
    MOV DL, 7H                     
    INT 21H                       
    XOR CH, CH                                
    
    DeleteNumber:                            
    
-     MOV DL, 8H                  
+     MOV DL, 08H                  
      INT 21H                      
      MOV DL, 20H                 
      INT 21H                      
-     MOV DL, 8H                   
+     MOV DL, 08H                   
      INT 21H                     
      LOOP DeleteNumber                   
      JMP readinput                    
