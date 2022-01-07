@@ -6,6 +6,13 @@ The selection sort algorithm sorts an array by repeatedly finding the minimum el
 2) Remaining subarray which is unsorted.
 In every iteration of selection sort, the minimum element (considering ascending order) from the unsorted subarray is picked and moved to the sorted subarray.
 
+# Bubble sort
+Bubble sort is an internal exchange sort. It is considered one of the simplest methods to sort an array of objects.  It is also known as a sinking sort (because the smallest items "sink" to the bottom of the array). 
+Instead of searching an array as a whole, the bubble sort works by comparing adjacent pairs of objects in the array.  If the objects are not in the correct ordered, they are swapped so that the largest of the two moves up.  This process continues until the largest of the objects, eventually "bubbles" up to the highest position in the array.  After this occurs, the search for the  next largest object begins.  The swapping continues until the whole array is in the correct order.
+Advantage:   It's Simple.           
+Disadvantages:  Very time-consuming, not recommended for long searches.
+## Bubble sort algorithm:
+![](https://github.com/Shrouk-Abdullah/sorting-array/blob/9737b3552316a6ef6f8fc28f14c7daafcda8bb04/bubble%20sort.png)
 
 # Complexity:
 time complxity:
