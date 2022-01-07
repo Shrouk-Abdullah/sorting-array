@@ -213,54 +213,55 @@
   CONDITION ENDP                                            
   
 ;-------------------DECIMALFORM FUNCTION-------------------------------------------------------------
+;this function reads a decimal number
 DECIMALFORM PROC      
     
-   PUSH BX                       
-   PUSH CX                        
-   PUSH DX                        
+   PUSH BX                        ;push BX into stack                     
+   PUSH CX                        ;push CX into stack   
+   PUSH DX                        ;push DX into stack   
    JMP ReadInput                   
   
    SkipBackspace:                         
    
-   MOV AH, 2                    
-   MOV DL, 20H                   
-   INT 21H           
+   MOV AH, 02H                    ;set AH=02H
+   MOV DL, 20H                    ;set DL=20H, ascii code of ' '
+   INT 21H                        ;interrupt 21H prints a character
    
    ReadInput:                       
 
-   XOR BX, BX                   
-   XOR CX, CX                     
-   XOR DX, DX                  
-   MOV AH, 01H                    
-   INT 21H                        
+   XOR BX, BX                     ;BX=0
+   XOR CX, CX                     ;CX=0
+   XOR DX, DX                     ;DX=0
+   MOV AH, 01H                    ; set AH=01H
+   INT 21H                        ; reads a character
    CMP AL, "-"                    
-   JE Negative                      
+   JE Negative                    ; if AL="-" jump to Negative label  
    CMP AL, "+"                    
-   JE Positive                  
-   JMP SpecialInput               
+   JE Positive                    ;if AL="+" jump to Positive label
+   JMP SpecialInput               ; jump to SpecialInput label
    
    Negative:                         
    
-   MOV CH, 1                    
-   INC CL                         
-   JMP Input                   
+   MOV CH, 1                      ; set CH=1
+   INC CL                         ;increment CL, CL=CL+1
+   JMP Input                      ; jump to label input
    
    Positive:                           
    
-   MOV CH, 2                      
-   INC CL                     
+   MOV CH, 2                      ;set CH=2
+   INC CL                         ; increment CL
    
    Input:                                 
    
-   MOV AH, 01h                    
-   INT 21H                    
+   MOV AH, 01H                    ; set AH=01H                    
+   INT 21H                        ; read a character
      
    SpecialInput:                
      
-   CMP AL, 0DH              
-   JE EndNumber              
-   CMP AL, 8H              
-   JNE CheckCharacter          
+   CMP AL, 0DH                    ; 0DH is the carriage return character, (if it's the end of number)
+   JE EndNumber                   ; jump to label EndNumber
+   CMP AL, 8H                     ; compare AL with zero
+   JNE CheckCharacter             ;if AL!=0, jump to CheckCharacter
    CMP CH, 0                    
    JNE Remove_negative_sign     
    CMP CL, 0                   
