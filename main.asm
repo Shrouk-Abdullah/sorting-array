@@ -519,12 +519,12 @@ SIGNED PROC
    
  READ_ARRAY PROC
  
-   PUSH AX                       
-   PUSH CX                        
-   PUSH DX                        
+   PUSH AX                        ;push AX into stack 
+   PUSH CX                        ;push CX into stack
+   PUSH DX                        ;push DX into stack
    
-   MOV CX, BX                    
-   READARRAY:                    
+   MOV CX, BX                    ;PUT value of BX in CX
+   READARRAY:                    ;LOOP &  READARRAY is a label
      CALL DECIMALFORM            
      MOV [SI], AX                
      ADD SI, 2                   
