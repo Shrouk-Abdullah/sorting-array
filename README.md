@@ -24,6 +24,9 @@ time complxity:
 - Worst case :o(n^2)
 - best case : o(n)
 
+space complxity:o(1)
+
+
 # selection sort
 
 The selection sort algorithm sorts an array by repeatedly finding the minimum element (considering ascending order) from unsorted part and putting it at the beginning. The algorithm maintains two subarrays in a given array.
@@ -35,7 +38,7 @@ In every iteration of selection sort, the minimum element (considering ascending
 time complxity:
 - Average case :o(n^2)
 - Worst case :o(n^2)
-
+- Best case : o(n^2)
 
 space complxity:o(1)
 don't need to extra space. 
