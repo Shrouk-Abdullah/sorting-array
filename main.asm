@@ -318,8 +318,7 @@ DECIMALFORM PROC
      MUL BX                      
      MOV BX, AX                  
      POP AX                       
-     ADD BX,AX                                          
-     JS Error                   
+     ADD BX,AX                                                          
      JMP Input  
                         
    Error:
