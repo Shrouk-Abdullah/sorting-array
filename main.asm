@@ -351,164 +351,148 @@ DECIMALFORM PROC
    POP BX                         ;pop a value from srack into BX register
    RET  
    DECIMALFORM ENDP
+
 ;----------------------------------Array_Size_plus-------------------------------;
+                    ; this procedure will read the array size from the user as a positive number
  Array_SizeP PROC
    PUSH BX                        ;push bx,cx,dx to stack
    PUSH CX                        
    PUSH DX                        
-   JMP ReadInput1                     
+   JMP ReadInput1                 ; jump to label ReadInput1   
    SKIP_BACKSPACE1:              
-   MOV AH, 2                      
-   MOV DL, 20H                    
-   INT 21H                        
+   MOV AH, 2                      ; set output function 
+   MOV DL, 20H                    ; set DL=' '
+   INT 21H                        ; iterrupt to print a character
    ReadInput1:                        
-   XOR BX, BX                     
+   XOR BX, BX                     ; clear BX,CX,DX
    XOR CX, CX                     
    XOR DX, DX                     
-   MOV AH, 1                      
-   INT 21H                        
-   CMP AL, "-"                    
+   MOV AH, 1                     ; set input function 
+   INT 21H                        ; read a character
+   CMP AL, "-"                    ; compare AL with negative sign
    INC CL
-   JE printError                     
-   CMP AL, "+"                    
-   JE Positive1                      
-   JMP SpecialInput1                
+   JE printError                  ; jump to label printError if AL="-"   
+   CMP AL, "+"                    ; compare AL with positive sign
+   JE Positive1                   ; jump to label Positive1 if AL="+"   
+   JMP SpecialInput1              ;else:jump to label SpecialInput1  
    Positive1:                        
-   MOV CH, 2                      
+   MOV CH, 2                     ;set CH=2 
    INC CL                         
    INPUT1:                       
-     MOV AH, 1                    
-     INT 21H                      
-     SpecialInput1:                
-     CMP AL, 0DH                  
-     JE END_INPUT1 ;<-----
-     CMP AL, 8H    
-     JNE NOT_BACKSPACE
-     CMP CH, 0                    
-     JNE Remove_negative_sign1      
-     CMP CL, 0                    
-     JE SKIP_BACKSPACE1         
-     JMP DeleteCharacter1  
-     CMP CL, 1                    
-     JE REMOVE_PLUS1   
+     MOV AH, 1                    ; set input function
+     INT 21H                      ; read a character
+     SpecialInput1:                ;---> check spiacial character
+     CMP AL, 0DH                  ;->check if al == end of line
+     JE END_INPUT1                ;jump to label END_INPUT1 if AL=end of line
+     CMP AL, 8H                    ; compare  al -> backspace 
+     JNE NOT_BACKSPACE              ; jump to label NOT_BACKSPACE if AL!=8
+     CMP CH, 0                    ; compare CH with 0
+     JNE Remove_negative_sign1     ; jump to label Remove_negative_sign1 if CH!=0 
+     CMP CL, 0                    ; compare CL with 0
+     JE SKIP_BACKSPACE1          ; jump to label SKIP_BACKSPACE1 if CL=0
+     JMP READNUMS             ;jump to label READNUMS
+     CMP CL, 1                    ; compare CL with 1
+     JE REMOVE_PLUS1              ; jump to label REMOVE_PLUS1 if CL=1
      Remove_negative_sign1:         
-     CMP CL, 1                    
-     JE REMOVE_PLUS1             
-     JMP DeleteCharacter1              
+     CMP CL, 1                   ; compare CL with 1
+     JE REMOVE_PLUS1             ; jump to label REMOVE_PLUS1 if CL=1
+     JMP READNUMS              ; jump to label READNUMS 
      REMOVE_PLUS1: 
-      MOV AH, 2                  
-      MOV DL, 20H                
-       INT 21H                    
-       MOV DL, 8H                 
-       INT 21H                    
-       JMP ReadInput                 
+      MOV AH, 2                  ; set output function
+          MOV DL, 20H                ; set DL=' '
+       INT 21H                    ; print a character
+       MOV DL, 8H                 ; set DL=8H
+       INT 21H                    ; print a character
+       JMP ReadInput1                ; jump to label ReadInput1         
                                   
-     DeleteCharacter1: 
-     MOV AX, BX                   
-     MOV BX, 10                   
-     DIV BX                       
-     MOV BX, AX                   
-     MOV AH, 2                    
-     MOV DL, 20H                  
-     INT 21H                      
-     MOV DL, 8H                   
-     INT 21H                      
-     XOR DX, DX                   
-     DEC CL                       
+     READNUMS:                          ;->  READ NUMS more than one digit                  
+     MOV AX, BX                   ;  AX=BX
+     MOV BX, 10                   ; BX=10
+     DIV BX                       ;  AX=AX/BX
+     MOV BX, AX                   ;  BX=AX
+     MOV AH, 2                    ; set output function
+     MOV DL, 20H                  ;  DL=' '
+     INT 21H                      ; print a character
+     MOV DL, 8H                   ;  DL=8H -> back
+     INT 21H                      ; print a character
+     XOR DX, DX                   ; clear DX
+     DEC CL                       ; CL=CL-1      
      JMP INPUT1                  
-     NOT_BACKSPACE:   
-     INC CL                       
-     CMP AL, 30H                  
-     JL BEEB_ERROR1    
-     CMP AL, 39H                  
-     JG BEEB_ERROR1                   
-     AND AX, 000FH 
-     PUSH AX                      
-     MOV AX, 10                   
-     MUL BX                       
-     MOV BX, AX                   
-     POP AX                       
-     ADD BX, AX                   
-     JS BEEB_ERROR1                   
+     NOT_BACKSPACE:               ; ->   check for nums from 0 to 9  
+     INC CL                       ;cl++
+     CMP AL, 30H                  ; compare AL with 0
+     JL BEEB_ERROR1              ; jump to label BEEB_ERROR1 if AL<0  
+     CMP AL, 39H                  ; compare AL with 9
+     JG BEEB_ERROR1                 ; jump to label BEEB_ERROR1 if AL>9   
+     AND AX, 000FH                ; convert ascii to decimal code
+     PUSH AX                      ; push AX onto the STACK
+     MOV AX, 10                   ;  AX=10
+     MUL BX                       ;  AX=AX*BX
+     MOV BX, AX                   ;  BX=AX
+     POP AX                       ; pop a value from STACK into AX
+     ADD BX, AX                   ;  BX=AX+BX
+     JS BEEB_ERROR1                ; jump to label BEEB_ERROR1 if SF=1   
    JMP INPUT1                    
    BEEB_ERROR1: 
-   MOV AH, 2                      
-   MOV DL, 7H                     
+   MOV AH, 2                      ; set output function
+   MOV DL, 7H                     ; set DL=7H ->  for beeping
    INT 21H                        
-   XOR CH, CH                     
+   XOR CH, CH                     ; clear CH
     printError:                      
-   LEA DX, Msg3 
-   MOV AH, 9
-   INT 21H
+   LEA DX, Msg3                   ;get the offset of Msg3 and put it into DX
+   MOV AH, 9                      
+   INT 21H                        ; print a character
   RET
-   
-   CLEAR1:                        
-     MOV DL, 8H                    
-     INT 21H                       
-     MOV DL, 20H                   
-     INT 21H                       
-     MOV DL, 8H                    
-     INT 21H                       
-   LOOP CLEAR1                    
-   JMP ReadInput                      
+                      
    END_INPUT1:                   
-   CMP CH, 1                      
-  JNE EXIT1                     
- NEG BX                         
+   CMP CH, 1                      ; compare CH with 1
+  JNE EXIT1                      ; jump to label EXIT1 if CH!=1
+ NEG BX                         ; negate BX   2's 
    EXIT1:                        
    MOV AX, BX                     
-   POP DX                         
+   POP DX                       ;pop DX,CX,BX  
    POP CX                         
    POP BX                         
-   RET                            
+   RET                         ; return control to the calling procedure   
    Array_SizeP ENDP    
    
    ;--------------------------------  SIGNED  --------------------------------;
-   
+                  ; this procedure will display a signed decimal number
 SIGNED PROC
-   PUSH BX                        
+   PUSH BX                         ;push bx,cx,dx to stack
    PUSH CX                        
    PUSH DX                        
 
-   CMP AX, 0                      
-   JGE START                     
-
-   PUSH AX                        
-
-   MOV AH, 2                      
-   MOV DL, "-"                    
-   INT 21H                        
-
-   POP AX                         
-
-   NEG AX                         
+   CMP AX, 0                      ; compare AX with 0
+   JGE START                     ; jump to label START if AX>=0
+   PUSH AX                        ; push AX onto the STACK
+   MOV AH, 2                      ; set output function 
+   MOV DL, "-"                    ; DL='-' for sign 
+   INT 21H                        ; print the character
+   POP AX                          ; pop a sugned value from STACK into AX
+   NEG AX                         ; take 2's complement of AX
 
    START:                        
-
-   XOR CX, CX                     
-   MOV BX, 10                     
-
+   XOR CX, CX                     ; clear CX
+   MOV BX, 10                     ; set BX=10
    OUTPUT:                       
-     XOR DX, DX                   
-     DIV BX                       
-     PUSH DX                      
-     INC CX                       
-     OR AX, AX                    
-   JNE OUTPUT                    
-
-   MOV AH, 2                      
-
+     XOR DX, DX                   ; clear DX
+     DIV BX                       ; divide AX / BX
+     PUSH DX                      ; push DX onto the stack
+     INC CX                       ; CX++
+     OR AX, AX                    ; take OR of Ax with AX
+   JNE OUTPUT                    ; jump to label OUTPUT if ZF=0
+   MOV AH, 2                      ; set output function
    DISPLAY:                      
-     POP DX                       
-     OR DL, 30H                   
+     POP DX                       ; pop a value from STACK to DX
+     OR DL, 30H                   ;take OR of DL with 30H
      INT 21H                      
    LOOP DISPLAY                  
-   
-   POP DX                         
+   POP DX                         ;pop values from stack into bx,cx,dx 
    POP CX                         
    POP BX                         
 
-   RET                            
+   RET                            ; return control to the calling procedure
  SIGNED ENDP
 ;-----------------------------  READ_ARRAY  -------------------------------;
  ;this function read the elements in an array
