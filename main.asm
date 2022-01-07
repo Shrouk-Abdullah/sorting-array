@@ -262,10 +262,10 @@ DECIMALFORM PROC
    JE EndNumber                   ; jump to label EndNumber
    CMP AL, 8H                     ; compare AL with zero
    JNE CheckCharacter             ;if AL!=0, jump to CheckCharacter
-   CMP CH, 0                    
-   JNE Remove_negative_sign     
-   CMP CL, 0                   
-   JE SkipBackspace          
+   CMP CH, 0                      ; compare CH with 0
+   JNE Remove_negative_sign       ; if CH not equal 0, jump to Remove_negativ_sign label
+   CMP CL, 0                      ; compare CL with 0
+   JE SkipBackspace               ; if CL=0,jump SkipBackspace label
    JMP DeleteCharacter            
      
    Remove_negative_sign:        
