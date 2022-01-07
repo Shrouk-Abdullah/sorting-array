@@ -545,11 +545,11 @@ SIGNED PROC
  
 PRINT_ARRAY PROC
   
-   PUSH AX                         
-   PUSH CX                        
-   PUSH DX                        
-   MOV CX, BX                     
-   PRINTARRAY:                    
+   PUSH AX                          ;push AX into stack 
+   PUSH CX                          ;push CX into stack 
+   PUSH DX                          ;push DX into stack 
+   MOV CX, BX                       ;PUT value of BX in CX
+   PRINTARRAY:                      ;LOOP &  PRINTARRAY is a label
      XOR AH, AH                   
      MOV AX, [SI]                 
      CALL SIGNED                  
