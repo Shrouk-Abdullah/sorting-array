@@ -8,7 +8,7 @@
     Msg4  DW  'Please choose type of sort, 1: for Bubble sort or 2: for Selection sort:$'  
     Msg5  DW  'Please choose between 1: for Bubble sort or 2: for Selection sort:',0AH,0DH,'$'
     Msg6  DW  ,0AH,0DH,'Your sorted array is:$'
-    Arr DW 255 DUP(?)    
+    Arr DW 255 DUP(?)                 ; define array with size 255 and random values
  
  .CODE
   MAIN PROC
