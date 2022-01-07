@@ -36,10 +36,10 @@ time complxity:
 - Average case :o(n^2)
 - Worst case :o(n^2)
 
-
 space complxity:o(1)
 don't need to extra space. 
-
+## Selection sort algorithm:
+![](https://github.com/Shrouk-Abdullah/sorting-array/blob/142979b99245c3a91cda1123e217ec8d581f3d1f/selection%20sort.png)
 # Advantage :
 - simple sorting algorithm.
 - in_place algorithm.
