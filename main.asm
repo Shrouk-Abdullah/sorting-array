@@ -524,17 +524,17 @@ SIGNED PROC
    
    MOV CX, BX                    ;PUT value of BX in CX
    READARRAY:                    ;LOOP &  READARRAY is a label
-     CALL DECIMALFORM            
-     MOV [SI], AX                
-     ADD SI, 2                   
+     CALL DECIMALFORM            ; call function DECIMALFORM 
+     MOV [SI], AX                ; set [SI]=AX
+     ADD SI, 2                   ; set SI=SI+2
      MOV DL, 0AH                 
-     MOV AH, 2                    
-     INT 21H                      
-   LOOP READARRAY                
-   POP DX                        
-   POP CX                        
-   POP AX                         
-   RET                            
+     MOV AH, 2                   ; set output function 
+     INT 21H                     ; print a character
+   LOOP READARRAY                ; if(CX!=0), jump to label READARRAY
+   POP DX                        ; pop a value from STACK into DX
+   POP CX                        ; pop a value from STACK into CX
+   POP AX                        ; pop a value from STACK into AX
+   RET                           ; return  
    READ_ARRAY ENDP
 ;----------------------------------PRINT_ARRAY------------------------------ 
  ;this function print the elements of a given array
