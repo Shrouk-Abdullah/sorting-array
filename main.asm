@@ -260,7 +260,7 @@ DECIMALFORM PROC
      
    CMP AL, 0DH                    ; 0DH is the carriage return character, (if it's the end of number)
    JE EndNumber                   ; jump to label EndNumber
-   CMP AL, 8H                     ; compare AL with zero
+   CMP AL, 08H                     ; compare AL with zero
    JNE CheckCharacter             ;if AL!=0, jump to CheckCharacter
    CMP CH, 0                      ; compare CH with 0
    JNE Remove_negative_sign       ; if CH not equal 0, jump to Remove_negativ_sign label
@@ -277,15 +277,15 @@ DECIMALFORM PROC
              
    Remove_positive_sign: 
             
-   CMP CL, 1                    
-   JE DeleteSign       
-   JMP DeleteCharacter              
+   CMP CL, 1                      ;compare CL with 1  
+   JE DeleteSign                  ; if CL=1 jump to DeleteSign label
+   JMP DeleteCharacter            ; jump DeleteCharacter label  
      
    DeleteSign:                              
      
-   MOV AH, 2                
-   MOV DL, 20H                
-   INT 21H                    
+   MOV AH, 02H                    ;set AH=2H
+   MOV DL, 20H                    ;set DL=' ' 
+   INT 21H                        ;interrupt 21H to print a character
    MOV DL, 8H                
    INT 21H                    
    JMP ReadInput         
