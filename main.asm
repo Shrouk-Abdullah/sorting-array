@@ -286,9 +286,9 @@ DECIMALFORM PROC
    MOV AH, 02H                    ;set AH=2H
    MOV DL, 20H                    ;set DL=' ' 
    INT 21H                        ;interrupt 21H to print a character
-   MOV DL, 8H                
-   INT 21H                    
-   JMP ReadInput         
+   MOV DL, 08H                    ;set DL= backspace 
+   INT 21H                        ; print a character
+   JMP ReadInput                  ; jump to ReadInput label
                                          
    DeleteCharacter:                  
      
