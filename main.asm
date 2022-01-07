@@ -564,7 +564,7 @@ PRINT_ARRAY PROC
    POP CX                        ; pop a value from STACK into CX
    POP AX                        ; pop a value from STACK into AX
    RET                           ; return
- PRINT_ARRAY ENDP
+ PRINT_ARRAY ENDP                ; End function
 ;--------------------------------------------------------------------------  
 
  END MAIN
