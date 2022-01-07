@@ -535,7 +535,7 @@ SIGNED PROC
    POP CX                        ; pop a value from STACK into CX
    POP AX                        ; pop a value from STACK into AX
    RET                           ; return  
-   READ_ARRAY ENDP
+   READ_ARRAY ENDP               ; End function
 ;----------------------------------PRINT_ARRAY------------------------------ 
  ;this function print the elements of a given array
  ;   SI=offset  of the array
