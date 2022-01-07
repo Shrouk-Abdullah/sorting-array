@@ -234,7 +234,7 @@ DECIMALFORM PROC
    XOR DX, DX                     ;DX=0
    MOV AH, 01H                    ; set AH=01H
    INT 21H                        ; reads a character
-   CMP AL, "-"                    
+   CMP AL, "-"                    ; compare AL with - character
    JE Negative                    ; if AL="-" jump to Negative label  
    CMP AL, "+"                    ; compare AL with + character
    JE Positive                    ;if AL="+" jump to Positive label
