@@ -236,7 +236,7 @@ DECIMALFORM PROC
    INT 21H                        ; reads a character
    CMP AL, "-"                    
    JE Negative                    ; if AL="-" jump to Negative label  
-   CMP AL, "+"                    
+   CMP AL, "+"                    ; compare AL with + character
    JE Positive                    ;if AL="+" jump to Positive label
    JMP SpecialInput               ; jump to SpecialInput label
    
