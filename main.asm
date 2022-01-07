@@ -556,7 +556,8 @@ PRINT_ARRAY PROC
      MOV DL, 20H                 ;set DL=20H, ascii code of ' '                
      INT 21H                     ;interrupt 21H prints a character     
 
-      ADD SI, 2                   ; set SI=SI+2
+      INC SI                       ; set SI=SI+1
+     INC SI                        ; set SI=SI+1
    LOOP PRINTARRAY               ; if(CX!=0), jump to label PRINTARRAY
 
    POP DX                        ; pop a value from STACK into DX
