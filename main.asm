@@ -323,10 +323,10 @@ DECIMALFORM PROC
                         
    Error:
                           
-   MOV AH, 02H                     ;print dl
-   MOV DL, 7H                     
-   INT 21H                       
-   XOR CH, CH                                
+   MOV AH, 02H                    ;set AH=2H
+   MOV DL, 7H                     ; sounds of bell
+   INT 21H                         
+   XOR CH, CH                     ; clear CH          
    
    DeleteNumber:                            
    
